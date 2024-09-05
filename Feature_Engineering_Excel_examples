@@ -1,0 +1,41 @@
+Below there's a just a couple of Excel formulae examples that were used in the "Perk Model". Fore more formulae regarding feature engineering and data normalization in Excel look the xlxs-file,
+which is uploaded in this same branch.
+
+Conditional function to chose an appropriate behavioural segment:
+
+=IF(
+    MIN(Table1[@[RANK: Flight Bargain Seeking Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Flight Bargain Seeking Index]],
+    "Flight Bargain Hunter",
+    IF(
+        MIN(Table1[@[RANK: Flight Bargain Seeking Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Hotel Bargain Seeking Index]],
+        "Hotel Bargain Hunter",
+        IF(
+            MIN(Table1[@[RANK: Flight Bargain Seeking Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Combined Booking Index]],
+            "Combined Booker",
+            IF(
+                MIN(Table1[@[RANK: Flight Bargain Seeking Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Hotel Only Booking Index]],
+                "Hotel Only Booker",
+                IF(
+                    MIN(Table1[@[RANK: Flight Bargain Seeking Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Heavy Packer Index]],
+                    "Heavy Packer",
+                    IF(
+                        MIN(Table1[@[RANK: Flight Bargain Seeking Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Flexible Traveler Index]],
+                        "Flexible Traveler",
+                        "Passive Deal Seeker"
+                    )
+                )
+            )
+        )
+    )
+)
+
+Conditional function to assign an appropriate perk
+
+=IF(MIN(Table1[@[RANK: Browsing Activity Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Browsing Activity Index]], "Exclusive Discount on Any First Booking", 
+IF(MIN(Table1[@[RANK: Browsing Activity Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Flight Bargain Seeking Index]], "Exclusive Flight Discount", 
+IF(MIN(Table1[@[RANK: Browsing Activity Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Hotel Bargain Seeking Index]], "Exclusive Hotel Discount", 
+IF(MIN(Table1[@[RANK: Browsing Activity Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Combined Booking Index]], "One Night Free Hotel with Flight", 
+IF(MIN(Table1[@[RANK: Browsing Activity Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Hotel Only Booking Index]], "Free Hotel Meal", 
+IF(MIN(Table1[@[RANK: Browsing Activity Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Heavy Packer Index]], "Free Checked Bag", 
+IF(MIN(Table1[@[RANK: Browsing Activity Index]:[RANK: Flexible Traveler Index]])=[@[RANK: Flexible Traveler Index]], "No Cancellation Fee")))))))
+
